@@ -14,6 +14,9 @@ axios.interceptors.response.use(success => {
         Message.error({message: success.data.msg, duration:2000, showClose:true})
         return;
     }
+    if (success.data.msg) {
+        Message.success({message: success.data.msg, duration:2000, showClose:true})
+    }
     return success.data;
 }, error => {
     if (error.response.status == 504 || error.response.status == 404) {

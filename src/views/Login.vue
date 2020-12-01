@@ -1,6 +1,11 @@
 <template>
   <div>
-    <el-form :rules="rules" :model="loginForm" class="loginContainer" ref="loginForm">
+    <el-form :rules="rules"
+             :model="loginForm"
+             class="loginContainer"
+             ref="loginForm"
+             v-loading="loading"
+             >
       <h3 class="loginTitle">系统登录</h3>
       <el-form-item prop="username">
         <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="请输入用户名"></el-input>
@@ -9,22 +14,21 @@
         <el-input type="password" v-model="loginForm.password"></el-input>
       </el-form-item>
       <el-button type="primary" style="width: 100%" @click="submitLogin()">登录</el-button>
-    </el-form>
+    </el-form >
   </div>
 </template>
 
 <script>
-import {postKeyValueRequest} from "@/utils/api";
-
+// import {postKeyValueRequest} from "@/utils/api";
 export default {
   name: "Login",
   data() {
     return {
+      loading: false,
       loginForm: {
         username: 'admin',
-        password: 'admin',
+        password: '123',
       },
-      checked: true,
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -40,10 +44,14 @@ export default {
     submitLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          postKeyValueRequest('/doLogin', this.loginForm)
+          this.loading = true;
+          this.postKeyValueRequest('/doLogin', this.loginForm)
             .then(resp => {
+              this.loading = false;
               if (resp) {
-                alert(JSON.stringify(resp));
+                window.sessionStorage.setItem('user', JSON.stringify(resp.obj));
+                // replace浏览器没有回退按钮,push可后退,切换路由
+                this.$router.replace('/home');
               }
             })
         } else {

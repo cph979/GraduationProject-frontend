@@ -1,0 +1,129 @@
+<template>
+  <div>
+    <el-container>
+      <el-header class="homeHeader">
+        <div class="title">vHhRr</div>
+        <el-dropdown class="userInfo" @command="handleCommand">
+          <span class="el-dropdown-link">
+            {{ user.name }}<i><img :src="user.userface"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
+            <el-dropdown-item command="setting">设置</el-dropdown-item>
+            <el-dropdown-item command="logout" divided>注销登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+          <!--
+            router	是否使用 vue-router 的模式，启用该模式会在激活导航时以 index 作为 path 进行路由跳转
+          -->
+          <el-menu router unique-opened>
+            <el-submenu
+                :index="index + ''"
+                v-for="(item, index) in routes"
+                :key="index"
+                v-if="!item.hidden"
+                >
+              <template slot="title">
+                <i :class="item.iconCls"></i>
+                <!--这里不用{{}}是为了避免网络较慢引起插值闪烁问题-->
+                <span v-text="item.name"></span>
+              </template>
+              <el-menu-item
+                  :index="child.path"
+                  v-for="(child, indexJ) in item.children"
+                  :key="indexJ"
+                  v-text="child.name"
+                  >
+              </el-menu-item>
+            </el-submenu>
+          </el-menu>
+        </el-aside>
+        <el-main>
+          <router-view/>
+        </el-main>
+      </el-container>
+    </el-container>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Home",
+  data() {
+    return {
+      user:JSON.parse(window.sessionStorage.getItem('user'))
+    }
+  },
+  computed: {
+    // 下次使用routers会调用缓存，computed特性
+    routes() {
+      return this.$store.state.routes;
+    }
+  },
+  methods: {
+    handleCommand(command) {
+      if (command == 'logout') {
+        this.$confirm('此操作将注销登录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.getRequest('/logout');
+          window.sessionStorage.removeItem('user');
+          this.$store.commit('initRoutes', []);
+          this.$router.replace('/');
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消操作'
+          });
+        });
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  .homeRouterView {
+
+  }
+
+  .homeWelcome {
+
+  }
+
+  .homeHeader {
+    background-color: #409eff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 15px;
+    box-sizing: border-box;
+  }
+
+  .homeHeader .title {
+    font-size: 30px;
+    font-family: 华文行楷;
+    color: #ffffff;
+  }
+
+  .homeHeader .userInfo {
+    cursor: pointer;
+  }
+
+  .el-dropdown-link img {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    margin-left: 8px;
+  }
+
+  .el-dropdown-link {
+    display: flex;
+    align-items: center;
+  }
+</style>
