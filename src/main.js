@@ -24,16 +24,17 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI);
 
+// 全局路由导航守卫
 router.beforeEach((to, from, next) => {
   if (to.path == '/') {
     next();
   } else {
-    if (window.sessionStorage.getItem("user")) {
+    // if (window.sessionStorage.getItem("user")) {
       initMenu(router, store);
       next();
-    } else {
-      next('/?redirect=' + to.path);
-    }
+    // } else {
+    //   next('/?redirect=' + to.path);
+    // }
   }
 })
 

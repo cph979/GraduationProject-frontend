@@ -77,6 +77,8 @@ export default {
   }
   /*标题样式*/
   .loginTitle {
+    font-size: 24px;
+    font-family: 华文行楷;
     text-align: center;
     color: #505458;
   }

@@ -13,17 +13,29 @@ const routes = [
     hidden: true
   }, {
     path: '/home',
-    name: 'Home',
+    name: '主页',
     component: Home,
     hidden: true
-  }, {
-    path: '*',
-    redirect: '/home'
   }
 ]
 
 const router = new VueRouter({
   routes
 })
+
+// 解决刷新页面路由重复问题，清空路由数组
+router.$addRoutes = (params) => {
+    router.matcher = new VueRouter({
+    mode: 'history',
+    routes: router.options.routes
+  }).matcher
+  router.addRoutes(params)
+}
+
+// 解决重复点击路由错误
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 export default router

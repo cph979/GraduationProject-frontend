@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header class="homeHeader">
-        <div class="title">vHhRr</div>
+        <div class="title">Staff Management System</div>
         <el-dropdown class="userInfo" @command="handleCommand">
           <span class="el-dropdown-link">
             {{ user.name }}<i><img :src="user.userface"></i>
@@ -42,6 +42,13 @@
           </el-menu>
         </el-aside>
         <el-main>
+          <el-breadcrumb separator-class="el-icon-arrow-right" v-if="this.$router.currentRoute.path!='/home'">
+            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>{{ this.$router.currentRoute.name }}</el-breadcrumb-item>
+          </el-breadcrumb>
+          <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">
+            Welcome to use employee management system！
+          </div>
           <router-view/>
         </el-main>
       </el-container>
@@ -93,7 +100,11 @@ export default {
   }
 
   .homeWelcome {
-
+    text-align: center;
+    font-size: 20px;
+    font-family: Consolas;
+    color: #409eff;
+    padding-top: 50px;
   }
 
   .homeHeader {
@@ -123,6 +134,8 @@ export default {
   }
 
   .el-dropdown-link {
+    font-size: 20px;
+    font-family: 华文行楷;
     display: flex;
     align-items: center;
   }
