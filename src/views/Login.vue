@@ -11,7 +11,7 @@
         <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="请输入用户名"></el-input>
       </el-form-item>
       <el-form-item prop="password" auto-complete="off" placeholder="请输入密码">
-        <el-input type="password" v-model="loginForm.password"></el-input>
+        <el-input type="password" v-model="loginForm.password" @keydown.enter.native="submitLogin"></el-input>
       </el-form-item>
       <el-button type="primary" style="width: 100%" @click="submitLogin()">登录</el-button>
     </el-form >
@@ -45,14 +45,15 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loading = true;
-          this.postKeyValueRequest('/doLogin', this.loginForm)
-            .then(resp => {
-              this.loading = false;
-              if (resp) {
-                window.sessionStorage.setItem('user', JSON.stringify(resp.obj));
-                // replace浏览器没有回退按钮,push可后退,切换路由
-                this.$router.replace('/home');
-              }
+          this.postKeyValueRequest('/doLogin', this.loginForm).then(resp => {
+            this.loading = false;
+            if (resp) {
+              window.sessionStorage.setItem('user', JSON.stringify(resp.obj));
+              // 获取路由导航守卫，router.beforeEach里next方法重定向路径里的path
+              let path = this.$route.query.redirect;
+              // replace浏览器没有回退按钮,push可后退,切换路由
+              this.$router.replace((path == '/' || path == undefined) ? '/home': path);
+            }
             })
         } else {
           this.$message.error('请输入所有字段');

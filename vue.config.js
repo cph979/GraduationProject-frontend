@@ -5,7 +5,7 @@ let proxyObj = {};
 proxyObj['/'] = {
     ws: false,
     // 目标转发地址，拦截到http请求转发到哪里去
-    target: 'http://localhost:8081',
+    target: 'http://localhost:8082',
     changeOrigin: true,
     pathRewrite: {
         '^/': ''
@@ -14,7 +14,7 @@ proxyObj['/'] = {
 module.exports = {
     devServer: {
         host: 'localhost',
-        port: 8080,
+        port: 8083,
         proxy: proxyObj
     }
 }

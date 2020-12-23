@@ -5,4 +5,7 @@
 </template>
 
 <style>
+  .el-table th.gutter {
+    display: table-cell !important;
+  }
 </style>

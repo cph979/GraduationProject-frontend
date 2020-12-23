@@ -22,15 +22,15 @@ axios.interceptors.response.use(success => {
     if (error.response.status == 504 || error.response.status == 404) {
         Message.error({message: '服务器被吃了( ╯□╰ )', duration:2000, showClose:true})
     } else if (error.response.status == 403) {
-        Message.error({message: '权限不足，请联系管理员', duration:2000, showClose:true})
+        Message.error({message: '权限不足，请联系管理员！', duration:2000, showClose:true})
     } else if (error.response.status == 401) {
-        Message.error({message: '尚未登录，请登录', duration:2000, showClose:true});
+        Message.error({message: '尚未登录，请登录！', duration:2000, showClose:true});
         router.replace('/');
     } else {
         if (error.response.data.msg) {
             Message.error({message: error.response.data.msg, duration:2000})
         } else {
-            Message.error({message: '未知错误!', duration:2000, showClose:true})
+            Message.error({message: '未知错误！', duration:2000, showClose:true})
         }
     }
     return;
@@ -60,6 +60,8 @@ export const postKeyValueRequest = (url, params) => {
     });
 }
 // 封装了restful风格请求,post delete put get,export-暴露出去
+
+// 带请求体请求
 export const postRequest = (url, params) => {
     return axios({
         method: 'post',
@@ -67,6 +69,7 @@ export const postRequest = (url, params) => {
         data: params
     })
 }
+// 带请求体请求
 export const putRequest = (url, params) => {
     return axios({
         method: 'put',
@@ -74,6 +77,7 @@ export const putRequest = (url, params) => {
         data: params
     })
 }
+// urlencoded
 export const getRequest = (url, params) => {
     return axios({
         method: 'get',
@@ -81,10 +85,19 @@ export const getRequest = (url, params) => {
         params: params
     })
 }
+// urlencoded
 export const deleteRequest = (url, params) => {
     return axios({
         method: 'delete',
         url: `${base}${url}`,
         params: params
+    })
+}
+// 带请求体删除
+export const deleteRequestData = (url, params) => {
+    return axios({
+        method: 'delete',
+        url: `${base}${url}`,
+        data: params
     })
 }

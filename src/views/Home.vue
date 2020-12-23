@@ -2,13 +2,13 @@
   <div>
     <el-container>
       <el-header class="homeHeader">
-        <div class="title">Staff Management System</div>
+        <div class="title">Employee Management System</div>
         <el-dropdown class="userInfo" @command="handleCommand">
           <span class="el-dropdown-link">
             {{ user.name }}<i><img :src="user.userface"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
+            <el-dropdown-item command="userInfo">个人中心</el-dropdown-item>
             <el-dropdown-item command="setting">设置</el-dropdown-item>
             <el-dropdown-item command="logout" divided>注销登录</el-dropdown-item>
           </el-dropdown-menu>
@@ -49,7 +49,7 @@
           <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">
             Welcome to use employee management system！
           </div>
-          <router-view/>
+          <router-view class="homeRouterView"/>
         </el-main>
       </el-container>
     </el-container>
@@ -96,7 +96,7 @@ export default {
 
 <style>
   .homeRouterView {
-
+    margin-top: 10px;
   }
 
   .homeWelcome {
