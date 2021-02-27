@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header class="homeHeader">
-        <div class="title"><!--Employee Management System-->VHR</div>
+        <div class="title">Employee Management System<!--VHR--></div>
         <div>
             <el-button
                     icon="el-icon-bell"
