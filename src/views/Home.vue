@@ -2,17 +2,25 @@
   <div>
     <el-container>
       <el-header class="homeHeader">
-        <div class="title">Employee Management System</div>
-        <el-dropdown class="userInfo" @command="handleCommand">
-          <span class="el-dropdown-link">
-            {{ user.name }}<i><img :src="user.userface"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="userInfo">个人中心</el-dropdown-item>
-            <el-dropdown-item command="setting">设置</el-dropdown-item>
-            <el-dropdown-item command="logout" divided>注销登录</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+        <div class="title"><!--Employee Management System-->VHR</div>
+        <div>
+            <el-button
+                    icon="el-icon-bell"
+                    type="text"
+                    style="margin-right: 10px; color: #000000;"
+                    size="medium" @click="goChat">
+            </el-button>
+            <el-dropdown class="userInfo" @command="handleCommand">
+              <span class="el-dropdown-link">
+                {{ user.name }}<i><img :src="user.userface"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="userInfo">个人中心</el-dropdown-item>
+                <el-dropdown-item command="setting">设置</el-dropdown-item>
+                <el-dropdown-item command="logout" divided>注销登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+        </div>
       </el-header>
       <el-container>
         <el-aside width="200px">
@@ -24,32 +32,31 @@
                 :index="index + ''"
                 v-for="(item, index) in routes"
                 :key="index"
-                v-if="!item.hidden"
-                >
+                v-if="!item.hidden">
               <template slot="title">
                 <i :class="item.iconCls"></i>
-                <!--这里不用{{}}是为了避免网络较慢引起插值闪烁问题-->
                 <span v-text="item.name"></span>
               </template>
               <el-menu-item
                   :index="child.path"
                   v-for="(child, indexJ) in item.children"
                   :key="indexJ"
-                  v-text="child.name"
-                  >
+                  v-text="child.name">
               </el-menu-item>
             </el-submenu>
           </el-menu>
         </el-aside>
-        <el-main>
+        <el-main :class="{ mainBackground: bgIsActive }">
           <el-breadcrumb separator-class="el-icon-arrow-right" v-if="this.$router.currentRoute.path!='/home'">
             <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>{{ this.$router.currentRoute.name }}</el-breadcrumb-item>
           </el-breadcrumb>
           <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">
-            Welcome to use employee management system！
+            崭新万物，正上升幻灭如明星，我却乌云遮目
           </div>
-          <router-view class="homeRouterView"/>
+          <div >
+            <router-view class="homeRouterView"/>
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -61,19 +68,26 @@ export default {
   name: "Home",
   data() {
     return {
-      user:JSON.parse(window.sessionStorage.getItem('user'))
+      bgIsActive: false,
+      // user: JSON.parse(window.sessionStorage.getItem('user')),
     }
   },
   computed: {
-    // 下次使用routers会调用缓存，computed特性
+    // 下次使用routes会调用缓存，computed特性
     routes() {
       return this.$store.state.routes;
+    },
+    user() {
+      return this.$store.state.currentHr;
     }
   },
   methods: {
+    goChat() {
+      this.$router.push('/home/chat');
+    },
     handleCommand(command) {
       if (command == 'logout') {
-        this.$confirm('此操作将注销登录, 是否继续?', '提示', {
+        this.$confirm('此操作将注销登录，是否继续？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -82,57 +96,63 @@ export default {
           window.sessionStorage.removeItem('user');
           this.$store.commit('initRoutes', []);
           this.$router.replace('/');
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消操作'
-          });
-        });
+        }).catch(() => {});
+      } else if (command == 'userInfo') {
+        this.$router.push('/home/info');
+      }
+    }
+  },
+  watch:{
+    $route(to, from){
+      // console.log(from.path); // 从哪来
+      // console.log(to.path); // 到哪去
+      if (to.path == '/home/chat') {
+        this.bgIsActive = true;
+      } else {
+        this.bgIsActive = false;
       }
     }
   }
+
 }
 </script>
 
 <style>
+  .mainBackground {
+    background-image: url("../assets/background.jpg");
+  }
   .homeRouterView {
     margin-top: 10px;
   }
-
   .homeWelcome {
     text-align: center;
-    font-size: 20px;
-    font-family: Consolas;
+    font-size: 30px;
+    font-family: 华文行楷;
     color: #409eff;
     padding-top: 50px;
   }
-
   .homeHeader {
     background-color: #409eff;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0px 15px;
+    padding: 0 15px;
     box-sizing: border-box;
   }
-
   .homeHeader .title {
     font-size: 30px;
     font-family: 华文行楷;
     color: #ffffff;
   }
-
   .homeHeader .userInfo {
     cursor: pointer;
   }
-
   .el-dropdown-link img {
     width: 48px;
     height: 48px;
     border-radius: 24px;
     margin-left: 8px;
   }
-
   .el-dropdown-link {
     font-size: 20px;
     font-family: 华文行楷;

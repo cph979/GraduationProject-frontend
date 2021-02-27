@@ -9,10 +9,10 @@
           v-model="pos.name">
       </el-input>
       <el-button
-          type="primary"
-          icon="el-icon-check"
-          @click="addPosition"
-          @keyup.enter="addPosition">
+              icon="el-icon-plus"
+              type="primary"
+              @click="addPosition"
+              @keyup.enter="addPosition">
         添加
       </el-button>
     </div>
@@ -73,6 +73,7 @@
       批量删除
     </el-button>
     <el-dialog
+        :close-on-click-modal="false"
         title="修改职位"
         :visible.sync="dialogVisible"
         width="30%">
@@ -119,6 +120,7 @@ export default {
   methods: {
     doUpdate() {
       this.updatePos.name.trim();
+      console.log(this.updatePos);
       this.putRequest('system/basic/pos', this.updatePos).then(resp => {
         if (resp) {
           this.initPositions();
@@ -137,7 +139,7 @@ export default {
     },
     // 删除单个职位
     handleDelete(row) {
-      this.$confirm('此操作将永久删除【' + row.name + '】职位, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除 [ ' + row.name + ' ] 职位，是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -168,14 +170,14 @@ export default {
         // this.$message.error('职位名称不可以为空');
         this.$message({
           type: 'warning',
-          message: '职位名称不可以为空！',
+          message: '职位名称不可以为空',
           duration:2000, showClose:true
         });
       }
     },
     // 批量删除职位对象
     delPositionS() {
-      this.$confirm('此操作将永久删除【' + this.multipleSelection.length + '】条记录, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除 [ ' + this.multipleSelection.length + ' ] 条记录，是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

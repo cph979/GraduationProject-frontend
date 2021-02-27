@@ -20,8 +20,8 @@
         </el-option>
       </el-select>
       <el-button
+              icon="el-icon-plus"
               type="primary"
-              icon="el-icon-check"
               @click="addJobLevel"
               @keyup.enter="addJobLevel">
         添加
@@ -89,6 +89,7 @@
       批量删除
     </el-button>
     <el-dialog
+            :close-on-click-modal="false"
             title="修改职位"
             :visible.sync="dialogVisible"
             width="30%">
@@ -177,7 +178,7 @@ export default {
     },
     // 删除单个职称
     handleDelete(row) {
-      this.$confirm('此操作将永久删除【' + row.name + '】职称, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除 [ ' + row.name + ' ] 职称，是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -208,14 +209,14 @@ export default {
       } else {
         this.$message({
           type: 'warning',
-          message: '请填写完整职称数据！',
+          message: '请填写完整职称数据',
           duration:2000, showClose:true
         });
       }
     },
     // 批量删除职称对象
     delJobLevels() {
-      this.$confirm('此操作将永久删除【' + this.multipleSelection.length + '】条记录, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除 [ ' + this.multipleSelection.length + ' ] 条记录，是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

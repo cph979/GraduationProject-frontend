@@ -17,7 +17,7 @@
               stripe
               border
               @selection-change="handleSelectionChange"
-              style="width: 87%">
+              style="width: 90%">
         <el-table-column
                 type="selection"
                 width="55">
@@ -26,30 +26,6 @@
                 prop="id"
                 label="编号"
                 width="55">
-        </el-table-column>
-        <el-table-column
-                prop="ecDate"
-                label="奖罚日期"
-                width="140">
-        </el-table-column>
-        <el-table-column
-                prop="ecReason"
-                label="奖罚原因"
-                width="256">
-        </el-table-column>
-        <el-table-column
-                prop="ecPoint"
-                width="66"
-                label="奖罚分">
-        </el-table-column>
-        <el-table-column
-                prop="ecType"
-                width="85"
-                label="奖罚类别">
-          <template slot-scope="scope">
-            <el-tag type="success" v-if="scope.row.ecType == 0">加分</el-tag>
-            <el-tag type="danger" v-else>减分</el-tag>
-          </template>
         </el-table-column>
         <el-table-column
                 prop="workID"
@@ -62,14 +38,31 @@
                 label="姓名">
         </el-table-column>
         <el-table-column
-                width="285"
-                label="操作">
+                prop="ecDate"
+                label="奖罚日期">
+        </el-table-column>
+        <el-table-column
+                prop="ecReason"
+                label="奖罚原因">
+        </el-table-column>
+        <el-table-column
+                prop="ecPoint"
+                label="奖罚分"
+                width="100">
+        </el-table-column>
+        <el-table-column
+                prop="ecType"
+                label="奖罚类别"
+                width="100">
           <template slot-scope="scope">
-            <el-button
-                    @click="handleEdit(scope.row)">编辑奖罚分</el-button>
-            <el-button
-                    type="danger"
-                    @click="handleDelete(scope.row)">删除</el-button>
+            <el-tag type="success" v-if="scope.row.ecType == 0">加分</el-tag>
+            <el-tag type="danger" v-else>减分</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button @click="handleEdit(scope.row)">编辑奖罚分</el-button>
+            <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -237,7 +230,7 @@
         this.emptyEmpEC();
         this.$refs.empECForm.clearValidate();
       },
-      // 打开新新增对话框
+      // 打开新增对话框
       showAddEmpEC() {
         this.getEmpNameWorkID();
         this.addDialogVisible = true;
@@ -260,14 +253,14 @@
                   this.initEmpECs();
                   this.addDialogVisible = false;
                   this.emptyEmpEC();
-                };
-              })
+                }
+              });
             }
           });
         } else {
           this.$message({
             type: 'warning',
-            message: '请选择员工！',
+            message: '请选择员工',
             duration:2000, showClose:true
           });
         }
@@ -290,7 +283,7 @@
       },
       // 删除单个奖惩记录
       handleDelete(row) {
-        this.$confirm('此操作将永久删除【' + row.name + '】奖罚记录, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除 [ ' + row.name + ' ] 奖罚记录，是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -310,7 +303,7 @@
       },
       // 批量删除奖惩对象
       delEmpECs() {
-        this.$confirm('此操作将永久删除【' + this.multipleSelection.length + '】条记录, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除 [ ' + this.multipleSelection.length + ' ] 条记录，是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

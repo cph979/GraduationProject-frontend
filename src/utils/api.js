@@ -1,5 +1,6 @@
-// 封装网络请求
-
+/**
+ * 封装网络请求
+ */
 import axios from 'axios';
 // 在js文件中单独引入elementUI消息提示组件
 import { Message } from 'element-ui';
@@ -22,15 +23,15 @@ axios.interceptors.response.use(success => {
     if (error.response.status == 504 || error.response.status == 404) {
         Message.error({message: '服务器被吃了( ╯□╰ )', duration:2000, showClose:true})
     } else if (error.response.status == 403) {
-        Message.error({message: '权限不足，请联系管理员！', duration:2000, showClose:true})
+        Message.error({message: '权限不足，请联系管理员', duration:2000, showClose:true})
     } else if (error.response.status == 401) {
-        Message.error({message: '尚未登录，请登录！', duration:2000, showClose:true});
+        Message.error({message: '尚未登录，请登录', duration:2000, showClose:true});
         router.replace('/');
     } else {
         if (error.response.data.msg) {
             Message.error({message: error.response.data.msg, duration:2000})
         } else {
-            Message.error({message: '未知错误！', duration:2000, showClose:true})
+            Message.error({message: '未知错误', duration:2000, showClose:true})
         }
     }
     return;
