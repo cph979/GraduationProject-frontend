@@ -3,11 +3,11 @@
         <ul style="padding-left: 0" v-if="currentSession">
             <li v-for="entry in sessions[user.username + '#' + currentSession.username]">
                 <p class="time">
-                    <span>{{entry.date | time}}</span>
+                    <span>{{ entry.date | time }}</span>
                 </p>
                 <div class="main" :class="{self:entry.self}">
                     <img class="avatar" :src="entry.self ? user.userface : currentSession.userface" alt="">
-                    <p class="text">{{entry.content}}</p>
+                    <p class="text">{{ entry.content }}</p>
                 </div>
             </li>
         </ul>
