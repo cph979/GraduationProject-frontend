@@ -38,8 +38,8 @@
         verifyImg: '/verify',
         loading: false,
         loginForm: {
-          username: '',
-          password: '',
+          username: 'admin',
+          password: '123',
           code: ''
         },
         rules: {
@@ -49,14 +49,22 @@
           password: [
             {required: true, message: '请输入密码', trigger: 'blur'},
           ],
-          code: [
-            {required: true, message: '请输入验证码', trigger: 'blur'},
-          ],
+          // code: [
+          //   {required: true, message: '请输入验证码', trigger: 'blur'},
+          // ],
         },
       }
     },
+    mounted() {
+      this.open();
+    },
     /*校验通过后才可以登录，需要使用到表单的方法*/
     methods: {
+      open() {
+        this.$alert('<strong>验证码已经关闭，直接登录即可</strong>', '提示', {
+          dangerouslyUseHTMLString: true
+        })
+      },
       // 刷新验证码
       flushCode() {
         this.verifyImg = '/verify?time=' + new Date();

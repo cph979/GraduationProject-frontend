@@ -5,6 +5,7 @@ import store from './store'
 import {
   Button,
   Input,
+  InputNumber,
   Table,
   TableColumn,
   Dialog,
@@ -88,6 +89,7 @@ Vue.use(Badge);
 Vue.use(Loading);
 Vue.use(Button);
 Vue.use(Input);
+Vue.use(InputNumber);
 Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Dialog);
@@ -99,25 +101,33 @@ Vue.use(Form);
 Vue.use(Tag);
 Vue.prototype.$alert = MessageBox.alert
 Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$message = Message;
 
 // 导入api.js封装的方法
 import {postRequest} from "./utils/api";
+import {postRequestJSON} from "./utils/api";
 import {postKeyValueRequest} from "./utils/api";
 import {putRequest} from "./utils/api";
 import {deleteRequest} from "./utils/api";
 import {deleteRequestData} from "./utils/api";
 import {getRequest} from "./utils/api";
 import {initMenu} from "@/utils/menus";
+// 导入des加解密方法
+import {encryptDES, decryptDES} from "./utils/des"
 
 import 'font-awesome/css/font-awesome.min.css'
 
 // 将封装的方法挂载到Vue实例上
 Vue.prototype.postRequest = postRequest;
+Vue.prototype.postRequestJSON = postRequestJSON;
 Vue.prototype.postKeyValueRequest = postKeyValueRequest;
 Vue.prototype.putRequest = putRequest;
 Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.deleteRequestData = deleteRequestData;
+
+Vue.prototype.encryptDES = encryptDES;
+Vue.prototype.decryptDES = decryptDES;
 
 Vue.config.productionTip = false
 

@@ -52,7 +52,7 @@
             <el-breadcrumb-item>{{ this.$router.currentRoute.name }}</el-breadcrumb-item>
           </el-breadcrumb>
           <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">
-            崭新万物，正上升幻灭如明星，我却乌云遮目
+            欢迎使用员工管理系统，点击左侧菜单开始使用
           </div>
           <div >
             <router-view class="homeRouterView"/>
@@ -118,9 +118,9 @@ export default {
 </script>
 
 <style>
-  .mainBackground {
+  /*.mainBackground {
     background-image: url("../assets/background.jpg");
-  }
+  }*/
   .homeRouterView {
     margin-top: 10px;
   }

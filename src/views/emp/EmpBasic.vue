@@ -450,8 +450,16 @@
                   <div
                           slot="reference"
                           @click="visible = !visible"
-                          style="width: 170px; display: inline-flex; font-size: 13px; border: 1px solid #dedede; height: 32px; border-radius: 5px; cursor:pointer; align-items: center; padding-left: 15px; box-sizing: border-box"
-                          v-text="deptTxt">
+                          style="width: 170px;
+                          display: inline-flex;
+                          font-size: 13px;
+                          border: 1px solid #dedede;
+                          height: 32px;
+                          border-radius: 5px;
+                          cursor:pointer;
+                          align-items: center;
+                          padding-left: 15px;
+                          box-sizing: border-box" v-text="deptTxt">
                   </div>
                 </el-popover>
               </el-form-item>
@@ -573,7 +581,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="聘用形式:" prop="engageForm">
-                <el-radio-group v-model="emp.engageForm">
+                <el-radio-group v-model="emp.engageForm" style="margin-top: 10px">
                   <el-radio label="劳动合同">劳动合同</el-radio>
                   <el-radio label="劳务合同">劳务合同</el-radio>
                 </el-radio-group>
@@ -581,7 +589,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="婚姻状况:" prop="wedlock">
-                <el-radio-group v-model="emp.wedlock">
+                <el-radio-group v-model="emp.wedlock" style="margin-top: 10px">
                   <el-radio label="已婚">已婚</el-radio>
                   <el-radio label="未婚">未婚</el-radio>
                   <el-radio label="离异">离异</el-radio>
@@ -742,6 +750,7 @@ export default {
         departmentId: null,
         beginDateScope: ''
       };
+      this.deptTxt = '所属部门';
       this.initEmp();
     },
     // 高级搜索部门树点击事件
@@ -860,7 +869,7 @@ export default {
         beginContract: '',
         endContract: ''
       };
-      this.deptTxt = '';
+      this.deptTxt = '选择部门';
     },
     // 获取全部部门数组
     initDepartments() {
@@ -1004,8 +1013,10 @@ export default {
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          this.emps = resp.data;
-          this.total = resp.total;
+          // 获取员工数据之前先DES解密再转成JSON对象
+          resp.obj = JSON.parse(this.decryptDES(resp.obj, this.$store.state.desKey));
+          this.emps = resp.obj.data;
+          this.total = resp.obj.total;
         }
       })
     },

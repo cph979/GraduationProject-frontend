@@ -3,10 +3,8 @@
     <div>
       <el-button icon="el-icon-plus" type="primary" @click="showAddDialog">添加工资账套</el-button>
     </div>
-    <div style="margin-top: 10px">
+    <div class="fixTable">
       <el-table
-              size="mini"
-              style="width: 75%"
               :data="salaries"
               border
               stripe
@@ -30,8 +28,7 @@
           <el-table-column width="70" label="基数" prop="accumulationFundBase"></el-table-column>
           <el-table-column width="70" label="比率" prop="accumulationFundPer"></el-table-column>
         </el-table-column>
-        <el-table-column
-                label="操作">
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
                     @click="handleEdit(scope.row)">编辑</el-button>
@@ -211,5 +208,9 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
+  }
+  .fixTable {
+    margin-top: 10px;
+    width: 85%;
   }
 </style>

@@ -70,6 +70,19 @@ export const postRequest = (url, params) => {
         data: params
     })
 }
+
+// 发送数据类型仅为 contentType:"application/json"的post带请求体请求
+export const postRequestJSON = (url, params) => {
+    return axios({
+        method: 'post',
+        url: `${base}${url}`,
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+        data: params
+    })
+}
+
 // 带请求体请求
 export const putRequest = (url, params) => {
     return axios({
@@ -78,6 +91,7 @@ export const putRequest = (url, params) => {
         data: params
     })
 }
+
 // urlencoded
 export const getRequest = (url, params) => {
     return axios({
@@ -86,6 +100,7 @@ export const getRequest = (url, params) => {
         params: params
     })
 }
+
 // urlencoded
 export const deleteRequest = (url, params) => {
     return axios({
@@ -94,6 +109,7 @@ export const deleteRequest = (url, params) => {
         params: params
     })
 }
+
 // 带请求体删除
 export const deleteRequestData = (url, params) => {
     return axios({

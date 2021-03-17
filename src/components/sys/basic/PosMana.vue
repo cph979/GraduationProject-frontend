@@ -167,7 +167,6 @@ export default {
           }
         })
       } else {
-        // this.$message.error('职位名称不可以为空');
         this.$message({
           type: 'warning',
           message: '职位名称不可以为空',
