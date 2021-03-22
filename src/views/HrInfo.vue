@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <el-card class="box-card" style="width: 400px">
+    <div style="display: flex; justify-content: center; margin-top: 100px">
+        <el-card style="width: 400px">
             <div slot="header">
                 <span>基本信息</span>
             </div>

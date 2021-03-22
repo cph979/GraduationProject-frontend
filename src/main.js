@@ -46,10 +46,12 @@ import {
   Row,
   Upload,
   Radio,
-  DatePicker,
   RadioGroup,
+  RadioButton,
+  DatePicker,
   CollapseItem,
-  Switch
+  Switch,
+  popconfirm
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
@@ -58,6 +60,7 @@ Vue.use(Switch);
 Vue.use(CollapseItem);
 Vue.use(Radio);
 Vue.use(RadioGroup);
+Vue.use(RadioButton);
 Vue.use(DatePicker);
 Vue.use(Upload);
 Vue.use(Row);
@@ -99,6 +102,7 @@ Vue.use(Icon);
 Vue.use(Select);
 Vue.use(Form);
 Vue.use(Tag);
+Vue.use(popconfirm);
 Vue.prototype.$alert = MessageBox.alert
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$message = Message;
