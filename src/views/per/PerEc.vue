@@ -298,7 +298,7 @@
       // 拿到奖惩数据，初始化表格
       initEmpECs() {
         this.getRequest('personnel/ec').then(resp => {
-          this.empECs = resp;
+          this.empECs = resp.obj;
         })
       },
       // 批量删除奖惩对象

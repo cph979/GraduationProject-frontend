@@ -10,13 +10,14 @@ const option = { mode: cryptoJs.mode.ECB, padding: cryptoJs.pad.Pkcs7 }
  * @returns {string}
  */
 export const encryptDES = (message, key) => {
+  message = JSON.stringify(message);
   let keyHex = cryptoJs.enc.Utf8.parse(key);
   let encrypted = cryptoJs.DES.encrypt(message, keyHex, option);
   return encrypted.toString();
 }
 
 /**
- * 前端DES加密
+ * 前端DES解密
  *
  * @param message
  * @param key

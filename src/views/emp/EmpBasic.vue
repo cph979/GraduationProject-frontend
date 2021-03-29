@@ -826,7 +826,7 @@ export default {
       } else {
         this.$refs[formName].validate(valid => {
           if (valid) {
-            this.postRequest('/employee/basic', this.emp).then(resp => {
+            this.postRequestJSON('/employee/basic', this.encryptDES(this.emp, this.$store.state.desKey)).then(resp => {
               if (resp) {
                 this.dialogVisible = false;
                 this.empInit();
@@ -916,7 +916,7 @@ export default {
       this.dialogVisible = true;
       this.title = '添加员工';
       this.getMaxWorkId();
-      // this.emptyEmp();
+      this.emptyEmp();
     },
     // 显示编辑对话框
     showEditEmpView(row) {
@@ -1013,8 +1013,6 @@ export default {
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          // 获取员工数据之前先DES解密再转成JSON对象
-          resp.obj = JSON.parse(this.decryptDES(resp.obj, this.$store.state.desKey));
           this.emps = resp.obj.data;
           this.total = resp.obj.total;
         }

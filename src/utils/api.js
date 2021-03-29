@@ -7,10 +7,19 @@ import { Message } from 'element-ui';
 
 import router from "@/router";
 
+import {encryptDES, decryptDES} from './des'
+
+import store from "../store";
+
 // 主要封装响应，集中处理服务器响应，使用axios响应拦截器
 axios.interceptors.response.use(success => {
     // 说明是业务上的错误，后端刻意返回500的情况
     // success.status是浏览器的响应码,后者则是后端手动返回的响应码
+    if (success.data.encryptStatus) {
+        // 服务端访问数据是否被加密标识
+        // 开始执行解密
+        success.data.obj = JSON.parse(decryptDES(success.data.obj, store.state.desKey));
+    }
     if (success.status && success.status == 200 && success.data.status == 500) {
         Message.error({message: success.data.msg, duration:2000, showClose:true})
         return;
@@ -36,6 +45,15 @@ axios.interceptors.response.use(success => {
     }
     return;
 })
+
+// axios.interceptors.request.use(function (config) {
+//     // 在发送请求之前做些什么
+//     console.log(config);
+//     return config;
+// }, function (error) {
+//     // 对请求错误做些什么
+//     return Promise.reject(error);
+// });
 
 let base = '';
 /*
@@ -82,7 +100,6 @@ export const postRequestJSON = (url, params) => {
         data: params
     })
 }
-
 // 带请求体请求
 export const putRequest = (url, params) => {
     return axios({
@@ -91,7 +108,6 @@ export const putRequest = (url, params) => {
         data: params
     })
 }
-
 // urlencoded
 export const getRequest = (url, params) => {
     return axios({
