@@ -155,7 +155,8 @@ export default {
     // 添加培训记录
     addEmpTrain() {
       if (this.empTrain.eid && this.empTrain.trainContent) {
-            this.postRequest('personnel/train', this.empTrain).then(resp => {
+
+            this.postRequestJSON('personnel/train', this.encryptDES(this.empTrain, this.$store.state.desKey)).then(resp => {
               if (resp) {
                 this.initEmpTrains();
                 this.addDialogVisible = false;
@@ -203,7 +204,7 @@ export default {
     // 拿到培训表数据，初始化表格
     initEmpTrains() {
       this.getRequest('personnel/train').then(resp => {
-        this.empTrains = resp;
+        this.empTrains = resp.obj;
       })
     },
     // 批量删除培训记录

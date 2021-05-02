@@ -129,6 +129,7 @@ Vue.prototype.putRequest = putRequest;
 Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.deleteRequestData = deleteRequestData;
+Vue.prototype.initMenu = initMenu;
 
 Vue.prototype.encryptDES = encryptDES;
 Vue.prototype.decryptDES = decryptDES;

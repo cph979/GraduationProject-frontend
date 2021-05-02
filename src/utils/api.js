@@ -16,7 +16,7 @@ axios.interceptors.response.use(success => {
     // 说明是业务上的错误，后端刻意返回500的情况
     // success.status是浏览器的响应码,后者则是后端手动返回的响应码
     if (success.data.encryptStatus) {
-        // 服务端访问数据是否被加密标识
+        // 服务端返回数据是否被加密标识
         // 开始执行解密
         success.data.obj = JSON.parse(decryptDES(success.data.obj, store.state.desKey));
     }

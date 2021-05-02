@@ -916,7 +916,7 @@ export default {
       this.dialogVisible = true;
       this.title = '添加员工';
       this.getMaxWorkId();
-      this.emptyEmp();
+      // this.emptyEmp();
     },
     // 显示编辑对话框
     showEditEmpView(row) {

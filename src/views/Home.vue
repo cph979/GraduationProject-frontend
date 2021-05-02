@@ -2,7 +2,8 @@
   <div>
     <el-container>
       <el-header class="homeHeader">
-        <div class="title">Employee Management System<!--VHR--></div>
+<!--        <div class="title">Employee Management System&lt;!&ndash;VHR&ndash;&gt;</div>-->
+        <div class="title">员工管理系统<!--VHR--></div>
         <div>
             <el-button
                     icon="el-icon-bell"
@@ -98,7 +99,7 @@ export default {
           this.$router.replace('/');
         }).catch(() => {});
       } else if (command == 'userInfo') {
-        this.$router.push('/home/info');
+        this.$router.push('/home/info').catch(error => {});
       }
     }
   },
@@ -118,9 +119,9 @@ export default {
 </script>
 
 <style>
-  /*.mainBackground {
+  .mainBackground {
     background-image: url("../assets/background.jpg");
-  }*/
+  }
   .homeRouterView {
     margin-top: 10px;
   }

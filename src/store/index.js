@@ -78,7 +78,7 @@ const store = new Vuex.Store({
           receiveMsg.to = receiveMsg.from;
           // console.log('receive>>>' + JSON.stringify(receiveMsg))
           context.commit('addMessage', receiveMsg);
-        })
+        }, error => {})
       }, error => {})
     },
     initData(context) {
